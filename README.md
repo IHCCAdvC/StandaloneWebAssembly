@@ -1,12 +1,7 @@
 # Full Stack Weather App
 
 Using What we learned in [previous](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-9.0&tabs=visual-studio) units about stand-alone web API we will build a weather API.
-We will also build a Stand-alone WebAssembly client app that runs .NET in browser. 
-
-## Requirements 
-
-- .NET 9.0+
-- MongoDB
+We will also build a Stand-alone WebAssembly client app that runs .NET in browser.
 
 ## Creating the Projects
 
@@ -20,8 +15,15 @@ dotnet new blazorwasm -o WeatherClient
 dotnet sln add ./WeatherServer/WeatherServer.csproj 
 ```
 
-maybe?
-`dotnet run --project ./TeamPulse/TeamPulse.csproj & dotnet run`
+To run the project `cd` to each project in two different terminals windows and run them as normal. 
+
+```bash
+cd WeatherServer
+dotnet run 
+cd ..
+cd WeatherClient
+dotnet run
+```
 
 The new file structure should be the following: 
 
@@ -57,7 +59,35 @@ WeatherSolution/
 
 ## Web API
 
+### NuGet
 
+```bash
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet tool uninstall -g dotnet-aspnet-codegenerator
+dotnet tool install -g dotnet-aspnet-codegenerator
+dotnet tool update -g dotnet-aspnet-codegenerator
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+```
+
+### Model
+
+### DB
+
+Migration
+
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+### Controlelr
+
+```bash
+dotnet aspnet-codegenerator controller -name WeatherController -async -api -m WeatherForcast -dc WeatherContext -outDir Controllers
+```
 
 ## Stand-alone WebAssembly client
 

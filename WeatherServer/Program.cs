@@ -1,4 +1,10 @@
+using Microsoft.EntityFrameworkCore;
+using WeatherServer.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<WeatherContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 
@@ -13,6 +19,14 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    SeedData.Initialize(services);
+}
+
 
 app.UseHttpsRedirection();
 

@@ -9,3 +9,6 @@ jacks_pizza_forum.db
 /Migrations
 identifier.sqlite
 /Folder.DotSettings.user
+/Weather.db
+/Weather.db-shm
+/Weather.db-wal
