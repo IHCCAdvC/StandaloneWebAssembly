@@ -31,20 +31,9 @@ The new file structure should be the following:
 WeatherSolution/
 ├── WeatherSolution.sln
 ├── WeatherClient/
-│   ├── WeatherClient.csproj
 │   ├── Program.cs
 │   ├── App.razor
 │   ├── Pages/
-│   │   ├── Index.razor
-│   │   ├── Counter.razor
-│   │   └── FetchData.razor
-│   ├── Shared/
-│   │   ├── MainLayout.razor
-│   │   └── NavMenu.razor
-│   └── wwwroot/
-│       ├── css/
-│       ├── lib/
-│       └── index.html
 └── WeatherServer/
     ├── WeatherServer.csproj
     ├── Program.cs
@@ -52,8 +41,6 @@ WeatherSolution/
     │   └── WeatherForecastController.cs
     ├── Models/
     │   └── WeatherForecast.cs
-    └── Properties/
-        └── launchSettings.json
 ```
 
 
@@ -74,21 +61,63 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 ### Model
 
+Build the `Models/WeatherForecast.cs` class.
+
 ### DB
 
-Migration
+Run a migration.
 
 ```bash
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
-### Controlelr
+### Controller
 
-```bash
-dotnet aspnet-codegenerator controller -name WeatherController -async -api -m WeatherForcast -dc WeatherContext -outDir Controllers
-```
+Build out the controller in `Controllers/WeatherController.cs`. 
 
 ## Stand-alone WebAssembly client
 
+Lets start Building the client. 
 
+
+### DTO
+
+Build out a DTO for the client. 
+
+```csharp
+public class WeatherForecastDTO
+{
+    public int Id { get; set; }
+    public DateOnly Date { get; set; }
+    public int TemperatureC { get; set; }
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public string? Summary { get; set; }
+    public string? City { get; set; }
+}
+```
+
+### Config
+
+Add an `appsettings.json` file with URL to the backend api. 
+**YOUR PORT** might be different. 
+
+```json
+{
+  "APIBaseAddress": "http://localhost:5066/"
+}
+```
+
+Add the following to the **Severs** `project.js`
+
+```csharp
+app.UseCors(policy => policy
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+```
+
+
+### Blazor
+
+In `Pages/Home.razor` build our a page to load in data from the Server. 
