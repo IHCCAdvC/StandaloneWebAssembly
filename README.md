@@ -72,6 +72,38 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
+Make a script to seed your db called `Data/SeedData.cs`. 
+
+```csharp
+public abstract class SeedData
+{
+    public static void Initialize(IServiceProvider serviceProvider)
+    {
+        using var context = new WeatherContext(
+            serviceProvider.GetRequiredService<
+                DbContextOptions<WeatherContext>>());
+
+        if (context.WeatherForecasts.Any())
+        {
+            return;
+        }
+
+        context.WeatherForecasts.AddRange(
+            new WeatherForecast
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now),
+                TemperatureC = 22,
+                City = "Ottumwa",
+                Summary = "Sunny"
+            },
+            //etc
+        );
+
+        context.SaveChanges();
+    }
+}
+```
+
 ### Controller
 
 Build out the controller in `Controllers/WeatherController.cs`. 

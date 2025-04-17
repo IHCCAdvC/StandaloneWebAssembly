@@ -11,6 +11,7 @@ public abstract class SeedData
             serviceProvider.GetRequiredService<
                 DbContextOptions<WeatherContext>>());
 
+        //TODO update
         if (context == null || context.WeatherForecasts == null)
         {
             throw new NullReferenceException(
