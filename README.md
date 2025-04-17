@@ -63,6 +63,33 @@ dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 
 Build the `Models/WeatherForecast.cs` class.
 
+```csharp
+```csharp
+public class WeatherForecast
+{
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
+
+    [Required]
+    public string City { get; set; }
+    
+    [Required]
+    public DateOnly Date { get; set; }
+
+    [Required]
+    [Range(-50, 50)]
+    public int TemperatureC { get; set; }
+
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    
+    [Required]
+    [StringLength(50)]
+    public string Summary { get; set; }
+}
+```
+```
+
 ### DB
 
 Run a migration.
