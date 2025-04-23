@@ -12,7 +12,9 @@ Then the last command links the two projects in the `.sln` file in the root.
 ```bash
 dotnet new webapi -o WeatherServer --use-controllers
 dotnet new blazorwasm -o WeatherClient
-dotnet sln add ./WeatherServer/WeatherServer.csproj 
+dotnet new sln --name WeatherApp
+dotnet sln add ./WeatherServer/WeatherServer.csproj
+dotnet sln add ./WeatherClient/WeatherClient.csproj 
 ```
 
 To run the project `cd` to each project in two different terminals windows and run them as normal. 
